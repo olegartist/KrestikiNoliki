@@ -1,5 +1,5 @@
 import random
-import time
+#import time
 
 
 def greet():
@@ -41,10 +41,6 @@ def check_point(_field, _x, _y, _empty):
     if _field[_y][_x] == _empty:
         return True
     return False
-
-
-def user_move(_field, _mark, _enemy, _empty):
-    pass
 
 
 # поиск второй вражеской точки на линии
@@ -228,6 +224,28 @@ def check_game(_field, _mark, _empty):
 #    print( check_point(_field, 0, 1, _mark))
 #    print( check_point(_field, 0, 2, _mark) )
 
+def user_move(_field, _mark, _enemy, _empty):
+    while True:
+        ss = input('Ваш ход: ').split()
+        if len(ss) != 2:
+            print('Введите 2 координаты!')
+            continue
+        x, y = ss
+        
+        if not(x.isdigit()) or not(y.isdigit()):
+            print('Введите два числа')
+            continue
+        
+        x, y = int(x), int(y)
+        
+        if not((0<= x < 3) and (0<= y < 3)):
+            print('За пределами поля')
+            continue
+            
+        if _field[y][x] == _empty:
+            return [x, y]
+        print('В эту точку уже ходили')
+            
 
 def action(_field, _mark, _enemy, _empty, _who='ai'):
     res = []
@@ -274,17 +292,17 @@ field = creat_field(_x=desk_x, _y=desk_y, _empty=empty)
 
 draw_field(field, _makr=True)
 while True:
-    action(field, p1, p2, empty)
+    action(field, p1, p2, empty, 'us')
     draw_field(field, _makr=True)
     if check_game(field, p1, empty):
         break
 
-    time.sleep(3)
+    #time.sleep(3)
     action(field, p2, p1, empty)
     draw_field(field, _makr=True)
     if check_game(field, p2, empty):
         break
-    time.sleep(3)
+    #time.sleep(3)
 
 
 # draw_field(field, _makr=False)
